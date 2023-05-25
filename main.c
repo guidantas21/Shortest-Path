@@ -34,7 +34,7 @@ void destroyGraph(Graph *graph) {
 Graph *createGraph(int numNodes) {
     Graph *graph = malloc(sizeof(Graph) * numNodes);
 
-        // check allocation
+     // check allocation
     if (graph == NULL)
         return NULL;
 
@@ -102,29 +102,29 @@ void displayDotGraph(Graph *graph) {
         
     FILE *fptr;
 
-   fptr = fopen("display/graph.dot","w");
+    fptr = fopen("display/graph.dot","w");
 
-   if(fptr == NULL) {
-      printf("Error!");   
-      exit(1);             
-   }
+    if(fptr == NULL) {
+        printf("Error!");   
+        exit(1);             
+    }
 
-    fprintf(fptr, "digraph {\n");
-    fprintf(fptr, "rankdir=LR;\n");
-    fprintf(fptr, "K=0.6;\n");
-    for (int from = 0; from < graph->numNodes; from++) {
-        for (int to = 0; to < graph->numNodes; to++) {
-            if (graph->edges[from][to]) {
-                fprintf(fptr, "%d -> %d [label = %d];\n", from, to, graph->edges[from][to]);
+        fprintf(fptr, "digraph {\n");
+        fprintf(fptr, "rankdir=LR;\n");
+        fprintf(fptr, "K=0.6;\n");
+        for (int from = 0; from < graph->numNodes; from++) {
+            for (int to = 0; to < graph->numNodes; to++) {
+                if (graph->edges[from][to]) {
+                    fprintf(fptr, "%d -> %d [label = %d];\n", from, to, graph->edges[from][to]);
+                }
             }
         }
-    }
-    fprintf(fptr, "}\n");
+        fprintf(fptr, "}\n");
 
-    fclose(fptr);
+        fclose(fptr);
 
     printf("Generating graph.pdf...\n");
-    system("dot graph.dot -Tpdf > display/graph.pdf");
+    system("dot display/graph.dot -Tpdf > display/graph.pdf");
 
     printf("Openning graph.pdf...\n");
     system("open display/graph.pdf");
@@ -243,6 +243,9 @@ int main() {
     addEdge(graph, 4, 0, 11);
 
     addEdge(graph, 5, 0, 11);
+    
+
+    dijkstra(graph, distances, prev, source);
 
     display(graph, distances, prev, source);
 
